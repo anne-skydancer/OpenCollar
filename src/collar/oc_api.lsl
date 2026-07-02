@@ -152,10 +152,10 @@ integer CalcAuth(key kID) {
     if(llLinksetDataRead("auth_WearerLockout")!="" && kID==g_kWearer) return CMD_NOACCESS;       
     string sID = (string)kID;
     // First check
-    if(llGetListLength(g_lOwner) == 0 && kID==g_kWearer && llListFindList(g_lBlock,[sID])==-1)
+    if(llListFindList(g_lBlock,[sID])!=-1)return CMD_BLOCKED;
+    if(llGetListLength(g_lOwner) == 0 && kID==g_kWearer)
         return CMD_OWNER;
     else{
-        if(llListFindList(g_lBlock,[sID])!=-1)return CMD_BLOCKED;
         if(llListFindList(g_lOwner, [sID])!=-1)return CMD_OWNER;
         if(llListFindList(g_lTrust,[sID])!=-1)return CMD_TRUSTED;
         if(g_kTempOwner == kID) return CMD_TRUSTED;
